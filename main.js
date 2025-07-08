@@ -44,7 +44,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-// const scrapImages = require('./src/puppeter/scrapeImages');
 
 const app = express();
 const port = process.env.PORT || 500;
@@ -53,19 +52,10 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ Serve imageList.json (if needed)
-app.use('/imagelist', express.static(path.join(__dirname, 'src/imageList.json')));
-
-// ✅ GET route for scraping images
-// app.get('/scrap-images', async (req, res) => {
-//   try {
-//     const data = await scrapImages();
-//     console.log('✅ Scraped Data:', data);
-//     res.json(data);
-//   } catch (err) {
-//     console.error('❌ Scraping error:', err);
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+// app.use('/imagelist', express.static(path.join(__dirname, 'src/imageList.json')));
+app.get('/imagelist', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'imageList.json'));
+});
 
 // ✅ Start the server
 app.listen(port, () => {
